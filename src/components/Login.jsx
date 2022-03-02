@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 
 // Bootstrap
 import { Row, Col, Container, Button, Form } from "react-bootstrap";
@@ -7,19 +7,13 @@ import { Row, Col, Container, Button, Form } from "react-bootstrap";
 // Redux
 import { useDispatch } from "react-redux";
 import loginAction from "../features/auth/actions/loginAction";
-import usernameAction from "../features/auth/actions/usernameAction";
-import refreshAction from "../features/auth/actions/refreshAction";
 
-import jwtDecode from "jwt-decode";
-
-import LocalStorageService from "../services/LocalStorageService";
 
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const dispatch = useDispatch();
   const redirect = useNavigate();
-  const localstorage = LocalStorageService.getService();
 
   const initialFormData = Object.freeze({
     username: "",
@@ -46,25 +40,6 @@ const Login = () => {
     });
     updateFormData(initialFormData);
   };
-
-  useEffect(() => {
-    const accessToken = localstorage.getAccessToken();
-    if (accessToken) {
-      const exp = jwtDecode(accessToken).exp;
-      console.log(exp);
-      if (exp * 1000 < Date.now()) {
-        console.log("Token expired");
-        dispatch(refreshAction()).then(() => {
-          redirect("/");
-        });
-      } else {
-        console.log("Token is okay");
-        dispatch(usernameAction());
-      }
-    } else {
-      console.log("token does not exist");
-    }
-  },[]);
 
   return (
     <>
