@@ -7,21 +7,16 @@ const refreshAPI = () => {
   const localStorageService = LocalStorageService.getService();
   const refreshToken = localStorageService.getRefreshToken();
 
-  if (refreshToken) {
-    console.log("refresh token recieved");
-    return axiosInstance
-      .post("api/auth/token/refresh/", { refresh: refreshToken })
-      .then((response) => {
-        localStorageService.setToken(response.data)
-      });
-  } else {
-    return console.log("refresh Token does not exist");
-  }
+  return axiosInstance
+    .post("api/auth/token/refresh/", { refresh: refreshToken })
+    .then((response) => {
+      localStorageService.setToken(response.data);
+    });
 };
 
 const refreshAction = createAsyncThunk("auth/refresh", async () => {
   await refreshAPI();
-  return { isLoggedIn: false };
+  return { isLoggedIn: true };
 });
 
 export default refreshAction;

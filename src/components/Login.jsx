@@ -46,7 +46,7 @@ const Login = () => {
       <Container>
         <Row className="mt-4">
           <Col className="d-flex justify-content-center">
-            <h1>Login Page</h1>
+            <h1>Sign In</h1>
           </Col>
         </Row>
         <Row className="mt-4">
