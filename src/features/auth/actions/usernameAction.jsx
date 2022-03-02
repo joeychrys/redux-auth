@@ -23,5 +23,3 @@ const usernameAction = createAsyncThunk("auth/username", async () => {
 });
 
 export default usernameAction;
-
-"test"
